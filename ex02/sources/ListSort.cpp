@@ -6,57 +6,116 @@
 /*   By: mde-lang <mde-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:55:18 by mde-lang          #+#    #+#             */
-/*   Updated: 2024/11/07 20:08:55 by mde-lang         ###   ########.fr       */
+/*   Updated: 2024/11/12 19:59:58 by mde-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/PmergeMe.hpp"
 
-void Sort::listSort() // algorithme pour list
+std::list<int> Sort::listSort(std::list<int> great_values)
 {
-	makePairs();
-	sortPairValues();
-	if (--_k > 1)
-		listSort();
+	std::list<std::pair<int, int> > pairs = makePairs(great_values);
+	great_values = makeGreatList(pairs);
 
-	// for (std::list<int>::iterator it = _sorted_values.begin(); it != _sorted_values.end(); ++it)
-	// 	std::cout << "sorted values : " << *it << std::endl;
-	
-	// insert();
+	if (great_values.size() == 1){
+		for (std::list<int>::iterator it = great_values.begin(); it != great_values.end(); ++it)
+        	std::cout << "sorted great values: " << *it << std::endl;
+	}
+	else
+		great_values = listSort(great_values);
+	return great_values;
 }
 
-void Sort::makePairs() // creation des paires pour list et vector
+std::list<std::pair<int, int> > Sort::makePairs(std::list<int> great_values) // creation des paires
 {
-	for (size_t i = 1; i <= (_values.size()) / 2; ++i)
+	std::list<std::pair<int, int> > pairs;
+	_it = great_values.begin();
+	_it2 = _it;
+	std::advance(_it2, 1);
+	for (size_t i = 1; i <= (great_values.size()) / 2; ++i)
 	{
-		pairs.push_back(std::make_pair(*_it, *_it2));
+		if (*_it > *_it2)
+			pairs.push_back(std::make_pair(*_it, *_it2));
+		else
+			pairs.push_back(std::make_pair(*_it2, *_it));
 		std::advance(_it, 2);
 		std::advance(_it2, 2);
 	}
-	for (std::list<std::pair<int, int> >::iterator pair_it = pairs.begin(); pair_it != pairs.end(); ++pair_it)
-        std::cout << "(" << pair_it->first << ", " << pair_it->second << ")" << std::endl;
+	return pairs;
 }
 
-void Sort::sortPairValues()
+std::list<int> makeGreatList(std::list<std::pair<int, int> > pairs)
 {
-	int tmp = 0;
-
+	std::list<int> great_values;
 	for (std::list<std::pair<int, int> >::iterator pair_it = pairs.begin(); pair_it != pairs.end(); ++pair_it)
-	{
-		if (pair_it->first < pair_it->second)
-		{
-			tmp = pair_it->first;
-			pair_it->first = pair_it->second;
-			pair_it->second = tmp;
-		}
-		_values.push_back(pair_it->first);
-		std::cout << "listSort: " << "(" << pair_it->first << ", " << pair_it->second << ")" << std::endl;
-	}
+		great_values.push_back(pair_it->first);
+	return great_values;
 }
 
 
 
 
+
+
+
+
+
+
+// std::list<std::pair<int, int> > Sort::makePairs() // creation des paires
+// {
+// 	_it = _sorted_values.begin();
+// 	_it2 = _it;
+// 	std::advance(_it2, 1);
+// 	for (size_t i = 1; i <= (_sorted_values.size()) / 2; ++i)
+// 	{
+// 		pairs.push_back(std::make_pair(*_it, *_it2));
+// 		std::advance(_it, 2);
+// 		std::advance(_it2, 2);
+// 	}
+
+// }
+
+
+
+// void Sort::makePairs() // creation des paires
+// {
+// 	_it = _sorted_values.begin();
+// 	_it2 = _it;
+// 	std::advance(_it2, 1);
+// 	for (size_t i = 1; i <= (_sorted_values.size()) / 2; ++i)
+// 	{
+// 		pairs.push_back(std::make_pair(*_it, *_it2));
+// 		std::advance(_it, 2);
+// 		std::advance(_it2, 2);
+// 	}
+
+// 	_sorted_values.clear();
+	
+// 	for (std::list<std::pair<int, int> >::iterator pair_it = pairs.begin(); pair_it != pairs.end(); ++pair_it)
+//         std::cout << "pair: " << "(" << pair_it->first << ", " << pair_it->second << ")" << std::endl;
+// 	std::cout << '\n';
+// }
+
+// void Sort::sortPairValues()
+// {
+// 	for (std::list<std::pair<int, int> >::iterator pair_it = pairs.begin(); pair_it != pairs.end(); ++pair_it)
+// 	{
+// 		if (pair_it->first < pair_it->second)
+// 		{
+// 			int tmp = pair_it->first;
+// 			pair_it->first = pair_it->second;
+// 			pair_it->second = tmp;
+// 		}
+// 		_sorted_values.push_back(pair_it->first);
+// 		std::cout << "swap: " << "(" << pair_it->first << ", " << pair_it->second << ")" << std::endl;
+		
+// 	}
+// 	std::cout << '\n';
+// 	for (std::list<int>::iterator it = _sorted_values.begin(); it != _sorted_values.end(); ++it)
+// 		std::cout << " value: " << *it << std::endl;
+// 	std::cout << '\n';
+// 	_step++;
+// }
 
 // void Sort::makePairs() // creation des paires pour list et vector
 // {
