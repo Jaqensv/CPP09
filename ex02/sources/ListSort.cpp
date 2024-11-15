@@ -6,7 +6,7 @@
 /*   By: mde-lang <mde-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:55:18 by mde-lang          #+#    #+#             */
-/*   Updated: 2024/11/14 19:51:58 by mde-lang         ###   ########.fr       */
+/*   Updated: 2024/11/15 16:31:18 by mde-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ std::list<int> Sort::listSort(std::list<int> great_values)
 	}
 	std::cout << "EXIT" << std::endl;
 	BACKLINE;
-	// for (std::list<std::pair<int, int> >::iterator pair_it = _initial_pairs.begin(); pair_it != _initial_pairs.end(); ++pair_it)
-	// 	great_values.push_front(pair_it->first);
+	std::list<int> small_values = makeSmallList(pairs, great_values);
+
 	return great_values;
 }
 
@@ -80,6 +80,25 @@ std::list<int> Sort::makeGreatList(std::list<std::pair<int, int> > pairs)
 	for (std::list<std::pair<int, int> >::iterator pair_it = pairs.begin(); pair_it != pairs.end(); ++pair_it)
 		great_values.push_back(pair_it->second);
 	return great_values;
+}
+
+std::list<int> Sort::makeSmallList(std::list<std::pair<int, int> > pairs, std::list<int> great_values)
+{	
+	std::list<int> small_values;
+	
+	for (size_t i = 0; i <= _ac; ++i)
+		small_values.push_back(0);
+
+	for (std::list<int>::iterator it = great_values.begin(); it != great_values.end(); ++it) {
+		for (std::list<std::pair<int, int> >::iterator pair_it = pairs.begin(); pair_it != pairs.end(); ++pair_it) {
+			if (*it == pair_it->second) {
+				std::list<int>::iterator tmp = it;
+				it = pair_it;
+				small_values.erase(it);
+				small_values.insert(pair_it, pair_it->second);
+			}
+		}
+	}
 }
 
 void Sort::saveThird(std::list<int> great_values)
