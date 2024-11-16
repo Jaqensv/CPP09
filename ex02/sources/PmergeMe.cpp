@@ -6,25 +6,21 @@
 /*   By: mde-lang <mde-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 19:09:49 by mde-lang          #+#    #+#             */
-/*   Updated: 2024/11/15 15:31:34 by mde-lang         ###   ########.fr       */
+/*   Updated: 2024/11/16 09:04:03 by mde-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/PmergeMe.hpp"
 
-Sort::Sort(int argc, char *argv[]) : _ac(argc - 1), _av(argv), _odd_val(0), _odd(false), _third_val(0), _third(false)
+Sort::Sort(int argc, char *argv[]) : _ac(argc - 1), _av(argv), _rstep(0), _odd_val(0), _odd(false), _third_val(0), _third(false)
 {
 	checkError(argc, argv);
 	std::list<int> sorted_values = listSort(initialData());
-	/////////////////////////////////////////////////////////////////////////////////////////////
-	for (std::list<int>::iterator it = sorted_values.begin(); it != sorted_values.end(); ++it)
-        	std::cout << "sorted values: " << *it << std::endl;
-	BACKLINE;
 }
 
 Sort::~Sort(){}
 
-void Sort::checkError(int argc, char *argv[]) const // check des erreurs avant parsing
+void Sort::checkError(int argc, char *argv[]) const
 {
 	for (size_t i = 1; i <= static_cast<size_t>(argc - 1); ++i) {
 		for (size_t j = 0; j < strlen(argv[i]); ++j) {       
@@ -52,7 +48,7 @@ std::list<int> Sort::initialData()
 	for (size_t i = 1; i + impair <= static_cast<size_t>(_ac); ++i) {
 		initial_list.push_back(atoi(_av[i]));	
 	}
-	/////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////
 	for (std::list<int>::iterator it = initial_list.begin(); it != initial_list.end(); ++it)
         std::cout << "initial values: " << *it << std::endl;
 	BACKLINE;
