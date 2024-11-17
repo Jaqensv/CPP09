@@ -29,11 +29,11 @@ public:
 	std::list<int> listSort(std::list<int> great_values);
 	std::list<std::pair<int, int> > makePairs(std::list<int> great_values);
 	std::list<int> makeGreatList(std::list<std::pair<int, int> > pairs);
-	std::list<int> makeSmallList(std::list<int> great_values);
-	void saveThird(std::list<int> great_values);
+	std::list<int> makeSmallList(std::list<int> great_values, int third_value);
 	std::list<int> insertThird(std::list<int> great_values);
 	std::list<int> insertGreat(std::list<int> great_values);
-	std::list<int> insertOdd(std::list<int> great_values);
+	std::list<int> insertSmall(std::list<int> great_values, std::list<int> small_values);
+	std::list<int> dichotomy(std::list<int> great_values, std::list<int>::iterator spot, int value_to_insert);
 	
 	void sortPairValues();
 	void splitValues();
@@ -47,11 +47,6 @@ private:
 	int 	  	_ac;
 	char	  **_av;
 	int			_rstep;
-
-	int			_odd_val;
-	bool		_odd;
-	int			_third_val;
-	bool		_third;
 
 	std::list<int>::iterator			_it;
 	std::list<int>::iterator 			_it2;

@@ -6,7 +6,7 @@
 /*   By: mde-lang <mde-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:55:18 by mde-lang          #+#    #+#             */
-/*   Updated: 2024/11/16 11:21:08 by mde-lang         ###   ########.fr       */
+/*   Updated: 2024/11/17 19:14:05 by mde-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 std::list<int> Sort::listSort(std::list<int> great_values)
 {
+	int odd_value = -1;
+
 	std::list<std::pair<int, int> > pairs = makePairs(great_values);
-	if (pairs.size() == 3)
-	 	saveThird(great_values);
+	if (great_values.size() % 2 != 0)
+	 	odd_value = great_values.back();
+	std::cout << "odd is : " << odd_value << std::endl;
+	BACKLINE;
 	////////////////////////////////////////////////////////////////////////////////////////////
 	for (std::list<std::pair<int, int> >::iterator pair_it = pairs.begin(); pair_it != pairs.end(); ++pair_it)
         std::cout << "pairs: " << "(" << pair_it->first << ", " << pair_it->second << ")" << std::endl;
@@ -30,35 +34,24 @@ std::list<int> Sort::listSort(std::list<int> great_values)
 	std::cout << "great values size: " << great_values.size() << std::endl;
 	BACKLINE;
 	////////////////////////////////////////////////////////////////////////////////////////////
-	// if (great_values.size() == 3)
-	// 	saveThird(great_values);
-	if (great_values.size() == 1) {
-		std::list<std::pair<int, int> >::iterator pair_it = pairs.begin();
-		great_values.push_front(pair_it->first);
-		if (_third == true)
-			great_values = insertThird(great_values);
-		////////////////////////////////////////////////////////////////////////////////////////
-		for (std::list<int>::iterator it = great_values.begin(); it != great_values.end(); ++it)
-        	std::cout << "sorted third value : " << *it << std::endl;
-		BACKLINE;
-		////////////////////////////////////////////////////////////////////////////////////////
+	if (great_values.size() == 1)
 		return great_values;
-	} else {
+	else {
 		_rstep++;
-		std::cout << "ENTER REC, rstep = " << _rstep << std::endl;
-		BACKLINE;
 		great_values = listSort(great_values);
 	}
 	std::cout << "EXIT" << std::endl;
 	BACKLINE;
-	great_values = insertGreat(great_values); // ???
-	std::list<int> small_values = makeSmallList(great_values);
+	std::list<int> small_values = makeSmallList(great_values, odd_value);
+	great_values = insertSmall(great_values, small_values);
 	for (std::list<int>::iterator it = great_values.begin(); it != great_values.end(); ++it)
         std::cout << "sorted great values: " << *it << std::endl;
 	BACKLINE;
-	for (std::list<int>::iterator it = small_values.begin(); it != small_values.end(); ++it)
-        std::cout << "sorted small values: " << *it << std::endl;
+	// for (std::list<int>::iterator it = small_values.begin(); it != small_values.end(); ++it)
+    //     std::cout << "sorted small values: " << *it << std::endl;
 	BACKLINE;
+
+	//insertSmall(great_values, small_values);
 
 	return great_values;
 }
@@ -78,10 +71,6 @@ std::list<std::pair<int, int> > Sort::makePairs(std::list<int> great_values) // 
 		std::advance(_it, 2);
 		std::advance(_it2, 2);
 	}
-	if (_ac % 2 != 0)
-		_odd_val = atoi(_av[_ac]);
-	std::cout << "impair is: " << _odd_val << std::endl;
-	BACKLINE;
 	if (_rstep == 0) {
 		_initial_pairs = pairs;
 		_initial_great_values = makeGreatList(pairs);
@@ -97,7 +86,7 @@ std::list<int> Sort::makeGreatList(std::list<std::pair<int, int> > pairs)
 	return great_values;
 }
 
-std::list<int> Sort::makeSmallList(std::list<int> great_values)
+std::list<int> Sort::makeSmallList(std::list<int> great_values, int third_value)
 {	
 	std::list<int> small_values;
 
@@ -107,35 +96,9 @@ std::list<int> Sort::makeSmallList(std::list<int> great_values)
 				small_values.push_back(pair_it->first);
 		}
 	}
+	if (third_value != -1)
+		small_values.push_back(third_value);
 	return small_values;
-}
-
-void Sort::saveThird(std::list<int> great_values)
-{
-	std::list<int>::iterator it = great_values.begin();
-	std::advance(it, 2);
-	_third_val = *it;
-	_third = true;
-	std::cout << "third is: " << *it << std::endl;
-	BACKLINE;
-}
-
-std::list<int> Sort::insertThird(std::list<int> great_values)
-{
-	for (std::list<int>::iterator it = great_values.begin(); it != great_values.end(); ++it) {
-		std::list<int>::iterator it2 = it++;
-		if (*it < *it2) {
-			great_values.push_front(_third_val);
-			return great_values;
-		} else {
-			if (_third_val > *it)
-				great_values.push_back(_third_val);
-			else
-				great_values.insert(it, _third_val);
-			return great_values;
-		}
-	}
-	return great_values;
 }
 
 std::list<int> Sort::insertGreat(std::list<int> great_values)
@@ -157,6 +120,31 @@ std::list<int> Sort::insertGreat(std::list<int> great_values)
 	return great_values;
 }
 
-// 	_jack = (static_cast<int>(pow(2, _k + 1)) + (static_cast<int>(pow(-1, _k)))) / 3;
+std::list<int> Sort::insertSmall(std::list<int> great_values, std::list<int> small_values)
+{
+	size_t j = 0;
+	int k = 0;
+
+	while (j++ <= small_values.size()) {
+		for (std::list<int>::iterator it = small_values.begin(); it != small_values.end(); ++it) {
+			k = (static_cast<int>(pow(2, k + 1)) + (static_cast<int>(pow(-1, k)))) / 3;
+			std::advance(it, k);
+			great_values = dichotomy(great_values, it, *it);
+			
+		}
+	}
+	
+}
+
+std::list<int> Sort::dichotomy(std::list<int> great_values, std::list<int>::iterator spot, int value_to_insert)
+{
+	std::list<int>::iterator it = great_values.begin();
+	while (--it != great_values.begin()) {
+		it = spot;
+		if (value_to_insert < *it)
+			
+	}
+	return great_values;
+}
 
 //k = phase d'insertion. ex: K2: insert J3 et J2

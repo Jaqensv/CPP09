@@ -6,13 +6,13 @@
 /*   By: mde-lang <mde-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 19:09:49 by mde-lang          #+#    #+#             */
-/*   Updated: 2024/11/16 09:04:03 by mde-lang         ###   ########.fr       */
+/*   Updated: 2024/11/17 18:12:33 by mde-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/PmergeMe.hpp"
 
-Sort::Sort(int argc, char *argv[]) : _ac(argc - 1), _av(argv), _rstep(0), _odd_val(0), _odd(false), _third_val(0), _third(false)
+Sort::Sort(int argc, char *argv[]) : _ac(argc - 1), _av(argv), _rstep(0)
 {
 	checkError(argc, argv);
 	std::list<int> sorted_values = listSort(initialData());
@@ -38,21 +38,11 @@ std::list<int> Sort::initialData()
 {
 	std::list<int> initial_list;
 
-	int impair = 1;
-	if (_ac % 2 == 0)
-		impair = 0;
-	else {
-		_odd_val = atoi(_av[_ac]);
-		_odd = true;
-	}
-	for (size_t i = 1; i + impair <= static_cast<size_t>(_ac); ++i) {
-		initial_list.push_back(atoi(_av[i]));	
-	}
+	for (size_t i = 1; i <= static_cast<size_t>(_ac); ++i)
+		initial_list.push_back(atoi(_av[i]));
 	////////////////////////////////////////////////////////////////////////////////////////////
 	for (std::list<int>::iterator it = initial_list.begin(); it != initial_list.end(); ++it)
         std::cout << "initial values: " << *it << std::endl;
-	BACKLINE;
-	std::cout << "impair : " << _odd_val << std::endl;
 	BACKLINE;
 	return initial_list;
 }
