@@ -33,7 +33,7 @@ public:
 	std::list<int> insertThird(std::list<int> great_values);
 	std::list<int> insertGreat(std::list<int> great_values);
 	std::list<int> insertSmall(std::list<int> great_values, std::list<int> small_values);
-	std::list<int> dichotomy(std::list<int> great_values, std::list<int>::iterator spot, int value_to_insert);
+	std::list<int> dichotomy(std::list<int> great_values, std::list<int>::iterator small_it);
 	
 	void sortPairValues();
 	void splitValues();

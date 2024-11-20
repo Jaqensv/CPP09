@@ -6,7 +6,7 @@
 /*   By: mde-lang <mde-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:55:18 by mde-lang          #+#    #+#             */
-/*   Updated: 2024/11/17 19:14:05 by mde-lang         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:50:05 by mde-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ std::list<int> Sort::listSort(std::list<int> great_values)
 	BACKLINE;
 	////////////////////////////////////////////////////////////////////////////////////////////
 	great_values = makeGreatList(pairs);
+	std::list<int> small_values = makeSmallList(great_values, odd_value);
 	////////////////////////////////////////////////////////////////////////////////////////////
 	for (std::list<int>::iterator it = great_values.begin(); it != great_values.end(); ++it)
         std::cout << "great values after makeGreatList: " << *it << std::endl;
@@ -42,8 +43,8 @@ std::list<int> Sort::listSort(std::list<int> great_values)
 	}
 	std::cout << "EXIT" << std::endl;
 	BACKLINE;
-	std::list<int> small_values = makeSmallList(great_values, odd_value);
-	great_values = insertSmall(great_values, small_values);
+	if (static_cast<int>(small_values.size()) >= _ac / 2)
+		great_values = insertSmall(great_values, small_values);
 	for (std::list<int>::iterator it = great_values.begin(); it != great_values.end(); ++it)
         std::cout << "sorted great values: " << *it << std::endl;
 	BACKLINE;
@@ -92,8 +93,10 @@ std::list<int> Sort::makeSmallList(std::list<int> great_values, int third_value)
 
 	for (std::list<int>::iterator it = great_values.begin(); it != great_values.end(); ++it) {
 		for (std::list<std::pair<int, int> >::iterator pair_it = _initial_pairs.begin(); pair_it != _initial_pairs.end(); ++pair_it) {
-			if (*it == pair_it->second)
+			if (*it == pair_it->second) {
 				small_values.push_back(pair_it->first);
+				std::cout << "small in makeSmallList: " << pair_it->first << std::endl;
+			}
 		}
 	}
 	if (third_value != -1)
@@ -124,26 +127,53 @@ std::list<int> Sort::insertSmall(std::list<int> great_values, std::list<int> sma
 {
 	size_t j = 0;
 	int k = 0;
+	//std::list<int>::iterator great_it = great_values.begin();
+
+	for (std::list<int>::iterator it = small_values.begin(); it != small_values.end(); ++it)
+	    std::cout << "small values in insertSmall: " << *it << std::endl;
 
 	while (j++ <= small_values.size()) {
-		for (std::list<int>::iterator it = small_values.begin(); it != small_values.end(); ++it) {
-			k = (static_cast<int>(pow(2, k + 1)) + (static_cast<int>(pow(-1, k)))) / 3;
-			std::advance(it, k);
-			great_values = dichotomy(great_values, it, *it);
-			
+		std::list<int>::iterator small_it = small_values.begin();
+		k = (static_cast<int>(pow(2, j + 1)) + (static_cast<int>(pow(-1, j)))) / 3;
+		std::cout << "k = " << k << std::endl;
+		if (k == 1) {
+			std::cout << "value to insert in k = 1: " << *small_it << std::endl;
+			great_values.push_front(*small_it);
+		} else {
+			if (k > static_cast<int>(small_values.size())) {
+				small_it = small_values.end();
+				small_it--;
+				//small_values.erase(--small_values.end());
+			}
+			else
+				std::advance(--small_it, k);
+			std::cout << "value to insert: " << *small_it << std::endl;
+
+			great_values = dichotomy(great_values, small_it);
+			//great_values.insert(great_it, *small_it);
 		}
+		for (std::list<int>::iterator it = great_values.begin(); it != great_values.end(); ++it)
+        	std::cout << "sorted great values: " << *it << " | k = " << k << " | j = " << j << std::endl;
+		BACKLINE;
 	}
-	
+	return great_values;
 }
 
-std::list<int> Sort::dichotomy(std::list<int> great_values, std::list<int>::iterator spot, int value_to_insert)
+std::list<int> Sort::dichotomy(std::list<int> great_values, std::list<int>::iterator small_it)
 {
+	int len = 0;
 	std::list<int>::iterator it = great_values.begin();
-	while (--it != great_values.begin()) {
-		it = spot;
-		if (value_to_insert < *it)
-			
+	for (; it != great_values.end(); ++it) {
+		len++;
+		if (small_it == it)
+			break;
 	}
+	std::cout << "len = " << len << std::endl;
+	if (len % 2 == 0) {
+		if (*small_it < *it)
+	}
+	else
+
 	return great_values;
 }
 
