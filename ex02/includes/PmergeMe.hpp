@@ -29,7 +29,7 @@ public:
 	std::list<int> listSort(std::list<int> great_values);
 	std::list<std::pair<int, int> > makePairs(std::list<int> great_values);
 	std::list<int> makeGreatList(std::list<std::pair<int, int> > pairs);
-	std::list<int> makeSmallList(std::list<int> great_values, int third_value);
+	std::list<int> makeSmallList(std::list<int> great_values, std::list<std::pair<int, int > > pairs, int third_value);
 	std::list<int> insertThird(std::list<int> great_values);
 	std::list<int> insertGreat(std::list<int> great_values);
 	std::list<int> insertSmall(std::list<int> great_values, std::list<int> small_values);
