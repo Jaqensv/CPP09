@@ -6,7 +6,7 @@
 /*   By: mde-lang <mde-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:55:18 by mde-lang          #+#    #+#             */
-/*   Updated: 2024/11/23 18:27:26 by mde-lang         ###   ########.fr       */
+/*   Updated: 2024/11/25 17:18:11 by mde-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ std::list<int> Sort::listSort(std::list<int> great_values)
 	std::cout << "EXIT" << std::endl;
 	BACKLINE;
 	great_values = insertSmall(great_values, small_values);
-	for (std::list<int>::iterator it = great_values.begin(); it != great_values.end(); ++it)
-        std::cout << "sorted great values: " << *it << std::endl;
-	BACKLINE;
+	//for (std::list<int>::iterator it = great_values.begin(); it != great_values.end(); ++it)
+    //     std::cout << "sorted great values: " << *it << std::endl;
+	// BACKLINE;
 	// for (std::list<int>::iterator it = small_values.begin(); it != small_values.end(); ++it)
     //     std::cout << "sorted small values: " << *it << std::endl;
 	//BACKLINE;
@@ -150,49 +150,86 @@ std::list<int> Sort::insertSmall(std::list<int> great_values, std::list<int> sma
 	    std::cout << "small values in insertSmall: " << *it << std::endl;
 	BACKLINE;
 
+	//std::list<int>::iterator it = small_values.begin();
 	while (j++ < small_values.size()) {
-		std::list<int>::iterator small_it = small_values.begin();
-		k = (static_cast<int>(pow(2, j + 1)) + (static_cast<int>(pow(-1, j)))) / 3;
-		std::cout << "k = " << k << std::endl;
-		if (k == 1) {
-			std::cout << "value to insert in k = 1: " << *small_it << std::endl;
-			great_values.push_front(*small_it);
-		} else {
-			if (k > static_cast<int>(small_values.size())) {
-				small_it = small_values.end();
-				small_it--;
-				//small_values.erase(--small_values.end());
-			}
-			else
-				std::advance(--small_it, k);
-			std::cout << "value to insert: " << *small_it << std::endl;
-
-			//great_values = dichotomy(great_values, small_it);
-			//great_values.insert(great_it, *small_it);
-		}
-		for (std::list<int>::iterator it = great_values.begin(); it != great_values.end(); ++it)
-        	std::cout << "sorted great values: " << *it << " | k = " << k << " | j = " << j << std::endl;
-		BACKLINE;
+		k = (static_cast<size_t>(pow(2, j + 1)) + (static_cast<size_t>(pow(-1, j)))) / 3;
+		great_values = dichoInsert(great_values, small_values, k);
 	}
 	return great_values;
 }
 
-// std::list<int> Sort::dichotomy(std::list<int> great_values, std::list<int>::iterator small_it)
-// {
-// 	int len = 0;
-// 	std::list<int>::iterator it = great_values.begin();
-// 	for (; it != great_values.end(); ++it) {
-// 		len++;
-// 		if (small_it == it)
-// 			break;
-// 	}
-// 	std::cout << "len = " << len << std::endl;
-// 	if (len % 2 == 0) {
-// 		if (*small_it < *it)
-// 			std::cout << "small_it: " << std::endl;
-// 	}
+std::list<int> Sort::dichoInsert(std::list<int> great_values, std::list<int> small_values, size_t k)
+{
+	
 
+	for (std::list<int>::iterator it = small_values.begin(); it != small_values.end(); ++it)
+	    std::cout << "small values in dicho: " << *it << std::endl;
+	for (std::list<int>::iterator it = great_values.begin(); it != great_values.end(); ++it)
+    	std::cout << "great values in dicho: " << *it << std::endl;
+	std::list<int>::iterator small_it = small_values.begin();
+	std::list<int>::iterator great_it = great_values.begin();
+	std::advance(small_it, -1);
+	std::advance(great_it, -1);
+	std::advance(small_it, k);
+	if (k == 1) {
+		great_values.push_front(*small_it);
+	} else {
+		i = k / 2;
+		std::advance(great_it, i);
+		while (count < small_values.size() - 1) {
+			if (*small_it < *great_it) {
+				
+			}
+		}
+
+	}
+	std::cout << "k = " << k << std::endl;
+	std::cout << "i = " << i << std::endl;
+
+	for (std::list<int>::iterator it = great_values.begin(); it != great_values.end(); ++it)
+    	std::cout << "great values in dicho sorted: " << *it << std::endl;
+
+	return great_values;
+}
+
+// std::list<int> Sort::insertSmall(std::list<int> great_values, std::list<int> small_values)
+// {
+// 	size_t j = 0;
+// 	int k = 0;
+// 	//std::list<int>::iterator great_it = great_values.begin();
+
+// 	for (std::list<int>::iterator it = great_values.begin(); it != great_values.end(); ++it)
+//     	std::cout << "great values in insertSmall: " << *it << std::endl;
+// 	for (std::list<int>::iterator it = small_values.begin(); it != small_values.end(); ++it)
+// 	    std::cout << "small values in insertSmall: " << *it << std::endl;
+// 	BACKLINE;
+
+// 	while (j++ < small_values.size()) {
+// 		std::list<int>::iterator small_it = small_values.begin();
+// 		k = (static_cast<int>(pow(2, j + 1)) + (static_cast<int>(pow(-1, j)))) / 3;
+// 		std::cout << "k = " << k << std::endl;
+// 		if (k == 1) {
+// 			std::cout << "value to insert in k = 1: " << *small_it << std::endl;
+// 			great_values.push_front(*small_it);
+// 		} else {
+// 			if (k > static_cast<int>(small_values.size())) {
+// 				small_it = small_values.end();
+// 				small_it--;
+// 				//small_values.erase(--small_values.end());
+// 			}
+// 			else
+// 				std::advance(--small_it, k);
+// 			std::cout << "value to insert: " << *small_it << std::endl;
+
+// 			//great_values = dichotomy(great_values, small_it);
+// 			//great_values.insert(great_it, *small_it);
+// 		}
+// 		for (std::list<int>::iterator it = great_values.begin(); it != great_values.end(); ++it)
+//         	std::cout << "sorted great values: " << *it << " | k = " << k << " | j = " << j << std::endl;
+// 		BACKLINE;
+// 	}
 // 	return great_values;
 // }
+
 
 //k = phase d'insertion. ex: K2: insert J3 et J2
