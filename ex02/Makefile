@@ -2,6 +2,7 @@ NAME = PmergeMe
 SOURCES = 	main.cpp \
 			sources/PmergeMe.cpp \
 			sources/ListSort.cpp \
+			sources/VectorSort.cpp \
 
 OBJECTS = $(SOURCES:.cpp=.o)
 

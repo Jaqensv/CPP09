@@ -6,7 +6,7 @@
 /*   By: mde-lang <mde-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:30:47 by mde-lang          #+#    #+#             */
-/*   Updated: 2024/12/10 16:39:19 by mde-lang         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:03:43 by mde-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int main(int argc, char *argv[])
 {
 	try
 	{
-		Sort sort(argc, argv);
+		//Sort sort(argc, argv);
+		VSort vsort(argc, argv);
 	}
 	catch(const std::exception &e)
 	{

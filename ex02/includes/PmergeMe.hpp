@@ -47,6 +47,42 @@ private:
 	std::list<std::pair<int, int> > 	_initial_pairs;
 	ssize_t calculateMid(ssize_t start, ssize_t end) {return start + (end - start) / 2;}
 
-	std::vector<int> vector;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class VSort {
+
+public:
+
+	~VSort();
+	VSort(const VSort &src);
+	VSort(int argc, char *argv[]);
+	Sort &operator=(const Sort &rhs);
+	void checkError(int argc, char *argv[]) const;
+	std::vector<int> initialData();
+	//
+	std::vector<int> vectorSort(std::vector<int> great_values);
+	std::vector<std::pair<int, int> > makePairs(std::vector<int> great_values);
+	std::vector<int> makeGreatVector(std::vector<std::pair<int, int> > pairs);
+	std::vector<int> makeSmallVector(std::vector<int> great_values, std::vector<std::pair<int, int > > pairs, int third_value);
+	std::vector<int> insertGreat(std::vector<int> great_values);
+	std::vector<int> insertSmall(std::vector<int> great_values, std::vector<int> small_values);
+	std::vector<int> dichoInsert(std::vector<int> great_values, int target_value, ssize_t k, ssize_t last_k);
+
+private:
+
+	VSort();
+	int 	  	_ac;
+	char	  **_av;
+	int			_rstep;
+	ssize_t		_k;
+
+	std::vector<int>::iterator			_it;
+	std::vector<int>::iterator 			_it2;
+	std::vector<int> 					_initial_great_values;
+	std::vector<std::pair<int, int> > 	_initial_pairs;
+	ssize_t calculateMid(ssize_t start, ssize_t end) {return start + (end - start) / 2;}
 
 };
+
