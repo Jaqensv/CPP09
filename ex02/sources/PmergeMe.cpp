@@ -6,13 +6,13 @@
 /*   By: mde-lang <mde-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 19:09:49 by mde-lang          #+#    #+#             */
-/*   Updated: 2024/11/23 17:00:47 by mde-lang         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:45:34 by mde-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/PmergeMe.hpp"
 
-Sort::Sort(int argc, char *argv[]) : _ac(argc - 1), _av(argv), _rstep(0)
+Sort::Sort(int argc, char *argv[]) : _ac(argc - 1), _av(argv), _rstep(0), _k(0)
 {
 	checkError(argc, argv);
 	std::list<int> sorted_values = listSort(initialData());

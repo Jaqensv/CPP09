@@ -24,22 +24,14 @@ public:
 	Sort &operator=(const Sort &rhs);
 	void checkError(int argc, char *argv[]) const;
 	std::list<int> initialData();
-	void display() const;
 	//
 	std::list<int> listSort(std::list<int> great_values);
 	std::list<std::pair<int, int> > makePairs(std::list<int> great_values);
 	std::list<int> makeGreatList(std::list<std::pair<int, int> > pairs);
 	std::list<int> makeSmallList(std::list<int> great_values, std::list<std::pair<int, int > > pairs, int third_value);
-	std::list<int> insertThird(std::list<int> great_values);
 	std::list<int> insertGreat(std::list<int> great_values);
 	std::list<int> insertSmall(std::list<int> great_values, std::list<int> small_values);
-	std::list<int> dichoInsert(std::list<int> great_values, std::list<int> small_values, ssize_t k);
-	
-	void sortPairValues();
-	void splitValues();
-	int insert();
-	//
-	void listVector();
+	std::list<int> dichoInsert(std::list<int> great_values, int target_value, ssize_t k, ssize_t last_k);
 
 private:
 
@@ -47,11 +39,13 @@ private:
 	int 	  	_ac;
 	char	  **_av;
 	int			_rstep;
+	ssize_t		_k;
 
 	std::list<int>::iterator			_it;
 	std::list<int>::iterator 			_it2;
 	std::list<int> 						_initial_great_values;
 	std::list<std::pair<int, int> > 	_initial_pairs;
+	ssize_t calculateMid(ssize_t start, ssize_t end) {return start + (end - start) / 2;}
 
 	std::vector<int> vector;
 
