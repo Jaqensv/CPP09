@@ -6,7 +6,7 @@
 /*   By: mde-lang <mde-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:55:18 by mde-lang          #+#    #+#             */
-/*   Updated: 2025/01/11 15:19:52 by mde-lang         ###   ########.fr       */
+/*   Updated: 2025/01/11 15:42:35 by mde-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,74 +75,52 @@ std::list<int> Sort::makeSmallList(std::list<int> great_values, std::list<std::p
 	return small_values;
 }
 
-std::list<int> Sort::insertGreat(std::list<int> great_values)
-{
-	for (std::list<int>::iterator it = _initial_great_values.begin(); it != _initial_great_values.end(); ++it) {
-		bool found = false;
-		std::list<int>::iterator it2 = great_values.begin();
-		for (; it2 != great_values.end(); ++it2) {
-			if (*it == *it2)
-				found = true;
-		}
-		if (found == false) {
-			while (*it > *it2)
-				it2++;
-			great_values.insert(it2, *it);
-		}
-    }
-	return great_values;
-}
-
 std::list<int> Sort::insertSmall(std::list<int> great_values, std::list<int> small_values)
 {
-	size_t j = 0;
-	ssize_t k = -1;
+    size_t j = 0;
+    std::list<int>::iterator small_it = small_values.begin();
 
-	while (j++ < small_values.size()) {
-		k = (static_cast<ssize_t>(pow(2, j + 1)) + (static_cast<ssize_t>(pow(-1, j)))) / 3;
-		if (k < _k)
-			k = _k;
-		_k = k;
-		std::list<int>::iterator small_it = small_values.begin();
-		std::advance(small_it, k);
-		for (std::list<int>::iterator great_it = great_values.begin(); great_it != great_values.end(); ++great_it) {
-			if (*small_it == *great_it)
-				--small_it;
-		}
-		int target_value = *small_it;
-		great_values = dichoInsert(great_values, target_value, k);
-	}
-	return great_values;
+    while (j < small_values.size()) {
+        int target_value = *small_it;
+        ssize_t k = static_cast<ssize_t>(pow(2, j + 1)) - 1;
+        if (k >= static_cast<ssize_t>(great_values.size()))
+            k = static_cast<ssize_t>(great_values.size()) - 1;
+        great_values = dichoInsert(great_values, target_value, k);
+        ++small_it;
+        ++j;
+    }
+
+    return great_values;
 }
-
 
 std::list<int> Sort::dichoInsert(std::list<int> great_values, int target_value, ssize_t k) {
     ssize_t start = 0;
-    ssize_t end = k > static_cast<ssize_t>(great_values.size()) ? static_cast<ssize_t>(great_values.size()) : k;
-    ssize_t mid = calculateMid(start, end);
+    ssize_t end = (k >= static_cast<ssize_t>(great_values.size())) ? great_values.size() : k + 1;
+    ssize_t mid;
 
-    if (great_values.empty() || k <= 0) {
-        great_values.push_back(target_value);
-        return great_values;
-    }
-    std::list<int>::iterator it = great_values.begin();
+    std::list<int>::iterator it_start = great_values.begin();
+    std::list<int>::iterator it_end = great_values.begin();
+    std::advance(it_end, end);
+
     while (start < end) {
-        mid = calculateMid(start, end);
-        it = great_values.begin();
-        std::advance(it, mid);
+        mid = start + (end - start) / 2;
+        std::list<int>::iterator it_mid = great_values.begin();
+        std::advance(it_mid, mid);
 
-        if (*it == target_value) {
-            great_values.insert(it, target_value);
+        if (*it_mid == target_value) 
             return great_values;
-        } 
-		else if (target_value < *it)
+        else if (*it_mid > target_value) {
             end = mid;
-		else
+            it_end = it_mid;
+        } else {
             start = mid + 1;
+            it_start = it_mid;
+            ++it_start;
+        }
     }
-    it = great_values.begin();
-    std::advance(it, start);
-    great_values.insert(it, target_value);
+    std::list<int>::iterator it_insert = great_values.begin();
+    std::advance(it_insert, start);
+    great_values.insert(it_insert, target_value);
 
     return great_values;
 }

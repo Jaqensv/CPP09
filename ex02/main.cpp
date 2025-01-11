@@ -6,7 +6,7 @@
 /*   By: mde-lang <mde-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:30:47 by mde-lang          #+#    #+#             */
-/*   Updated: 2025/01/11 15:26:21 by mde-lang         ###   ########.fr       */
+/*   Updated: 2025/01/11 16:14:41 by mde-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 		for (size_t i = 1; argv[i]; ++i)
 			std::cout << argv[i] << " ";
 		BACKLINE;
-		//Sort sort(argc, argv);
+		Sort sort(argc, argv);
 		BACKLINE;
 		VSort vsort(argc, argv);
 	}

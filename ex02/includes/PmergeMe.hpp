@@ -12,7 +12,7 @@
 #include <ctime> // std::clock
 #include <string>
 
-#define BACKLINE std::cout << '\n'
+#define BACKLINE std::cout << '\n' << '\n'
 
 class Sort {
 
@@ -29,7 +29,6 @@ public:
 	std::list<std::pair<int, int> > makePairs(std::list<int> great_values);
 	std::list<int> makeGreatList(std::list<std::pair<int, int> > pairs);
 	std::list<int> makeSmallList(std::list<int> great_values, std::list<std::pair<int, int > > pairs, int third_value);
-	std::list<int> insertGreat(std::list<int> great_values);
 	std::list<int> insertSmall(std::list<int> great_values, std::list<int> small_values);
 	std::list<int> dichoInsert(std::list<int> great_values, int target_value, ssize_t k);
 
@@ -66,7 +65,6 @@ public:
 	std::vector<std::pair<int, int> > makePairs(std::vector<int> great_values);
 	std::vector<int> makeGreatVector(std::vector<std::pair<int, int> > pairs);
 	std::vector<int> makeSmallVector(std::vector<int> great_values, std::vector<std::pair<int, int > > pairs, int third_value);
-	std::vector<int> insertGreat(std::vector<int> great_values);
 	std::vector<int> insertSmall(std::vector<int> great_values, std::vector<int> small_values);
 	std::vector<int> dichoInsert(std::vector<int> great_values, int target_value, ssize_t k);
 
