@@ -6,7 +6,7 @@
 /*   By: mde-lang <mde-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:52:34 by mde-lang          #+#    #+#             */
-/*   Updated: 2024/12/19 11:48:38 by mde-lang         ###   ########.fr       */
+/*   Updated: 2025/01/11 15:08:41 by mde-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,12 @@ std::vector<int> VSort::vectorSort(std::vector<int> great_values)
     std::vector<std::pair<int, int> > pairs = makePairs(great_values);
     if (great_values.size() % 2 != 0)
         odd_value = great_values.back();
-
-    std::cout << "odd is : " << odd_value << std::endl;
-
-    for (std::vector<std::pair<int, int> >::iterator pair_it = pairs.begin(); pair_it != pairs.end(); ++pair_it)
-        std::cout << "pairs: (" << pair_it->first << ", " << pair_it->second << ")" << std::endl;
-
     great_values = makeGreatVector(pairs);
     std::vector<int> small_values = makeSmallVector(great_values, pairs, odd_value);
-
     if (great_values.size() > 1) {
         _rstep++;
         great_values = vectorSort(great_values);
     }
-
-    std::cout << "EXIT" << std::endl;
     great_values = insertSmall(great_values, small_values);
 
     return great_values;
@@ -91,43 +82,30 @@ std::vector<int> VSort::insertSmall(std::vector<int> great_values, std::vector<i
     while (j < small_values.size()) {
         int target_value = small_values[j];
         ssize_t k = static_cast<ssize_t>(pow(2, j + 1)) - 1;
-        ssize_t last_k = static_cast<ssize_t>(pow(2, j)) - 1;
-
         if (k >= static_cast<ssize_t>(great_values.size()))
             k = great_values.size() - 1;
-
-        great_values = dichoInsert(great_values, target_value, k, last_k);
+        great_values = dichoInsert(great_values, target_value, k);
         j++;
     }
-
     return great_values;
 }
 
-std::vector<int> VSort::dichoInsert(std::vector<int> great_values, int target_value, ssize_t k, ssize_t last_k)
+std::vector<int> VSort::dichoInsert(std::vector<int> great_values, int target_value, ssize_t k)
 {
     ssize_t start = 0;
     ssize_t end = k >= static_cast<ssize_t>(great_values.size()) ? great_values.size() : k + 1;
     ssize_t mid;
 
-    std::cout << "START DICHO INSERT\n";
-    std::cout << "Target value: " << target_value << ", Last k: " << last_k << "\n";
-
     while (start < end) {
         mid = start + (end - start) / 2;
 
-        if (great_values[mid] == target_value) {
-            std::cout << "Value already present: " << target_value << "\n";
+        if (great_values[mid] == target_value)
             return great_values;
-        } else if (great_values[mid] > target_value) {
+        else if (great_values[mid] > target_value)
             end = mid;
-        } else {
+        else
             start = mid + 1;
-        }
     }
-
-    // Insert target_value at the correct position
     great_values.insert(great_values.begin() + start, target_value);
-
-    std::cout << "Inserted value: " << target_value << " at position: " << start << "\n";
     return great_values;
 }

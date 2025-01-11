@@ -6,7 +6,7 @@
 /*   By: mde-lang <mde-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:55:18 by mde-lang          #+#    #+#             */
-/*   Updated: 2024/12/10 16:38:36 by mde-lang         ###   ########.fr       */
+/*   Updated: 2025/01/11 15:19:52 by mde-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,12 @@ std::list<int> Sort::listSort(std::list<int> great_values)
 	std::list<std::pair<int, int> > pairs = makePairs(great_values);
 	if (great_values.size() % 2 != 0)
 	 	odd_value = great_values.back();
-	std::cout << "odd is : " << odd_value << std::endl;
-	for (std::list<std::pair<int, int> >::iterator pair_it = pairs.begin(); pair_it != pairs.end(); ++pair_it)
-        std::cout << "pairs: " << "(" << pair_it->first << ", " << pair_it->second << ")" << std::endl;
 	great_values = makeGreatList(pairs);
 	std::list<int> small_values = makeSmallList(great_values, pairs, odd_value);
 	if (great_values.size() > 1) {
 		_rstep++;
 		great_values = listSort(great_values);
 	}
-	std::cout << "EXIT" << std::endl;
 	great_values = insertSmall(great_values, small_values);
 
 	return great_values;
@@ -103,11 +99,7 @@ std::list<int> Sort::insertSmall(std::list<int> great_values, std::list<int> sma
 	ssize_t k = -1;
 
 	while (j++ < small_values.size()) {
-		for (std::list<int>::iterator it = small_values.begin(); it != small_values.end(); ++it)
-	    	std::cout << "small values in insertSmall: " << *it << std::endl;
-		BACKLINE;
 		k = (static_cast<ssize_t>(pow(2, j + 1)) + (static_cast<ssize_t>(pow(-1, j)))) / 3;
-		ssize_t last_k = (static_cast<ssize_t>(pow(2, j)) + (static_cast<ssize_t>(pow(-1, j - 1)))) / 3;
 		if (k < _k)
 			k = _k;
 		_k = k;
@@ -118,23 +110,17 @@ std::list<int> Sort::insertSmall(std::list<int> great_values, std::list<int> sma
 				--small_it;
 		}
 		int target_value = *small_it;
-		great_values = dichoInsert(great_values, target_value, k, last_k);
+		great_values = dichoInsert(great_values, target_value, k);
 	}
 	return great_values;
 }
 
 
-std::list<int> Sort::dichoInsert(std::list<int> great_values, int target_value, ssize_t k, ssize_t last_k) {
+std::list<int> Sort::dichoInsert(std::list<int> great_values, int target_value, ssize_t k) {
     ssize_t start = 0;
     ssize_t end = k > static_cast<ssize_t>(great_values.size()) ? static_cast<ssize_t>(great_values.size()) : k;
     ssize_t mid = calculateMid(start, end);
 
-    std::cout << "START DICHO INSERT\n";
-    std::cout << "Last k: " << last_k << "\n";
-    std::cout << "Target value: " << target_value << "\n";
-
-    for (std::list<int>::iterator it = great_values.begin(); it != great_values.end(); ++it)
-        std::cout << "great_values: " << *it << "\n";
     if (great_values.empty() || k <= 0) {
         great_values.push_back(target_value);
         return great_values;
@@ -158,11 +144,5 @@ std::list<int> Sort::dichoInsert(std::list<int> great_values, int target_value, 
     std::advance(it, start);
     great_values.insert(it, target_value);
 
-    std::cout << "Inserted value: " << target_value << " at position: " << start << "\n";
-
-    for (std::list<int>::iterator it = great_values.begin(); it != great_values.end(); ++it) {
-        std::cout << "Sorted great_values: " << *it << "\n";
-    }
-    std::cout << "END DICHO INSERT\n";
     return great_values;
 }

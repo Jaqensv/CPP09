@@ -21,18 +21,7 @@ public:
 	~Sort();
 	Sort(const Sort &src);
 	Sort(int argc, char *argv[]);
-	Sort &operator=(const Sort &rhs) {
-		if (this != &rhs) {
-			_ac = rhs._ac;
-			_av = rhs._av;
-			_rstep = rhs._rstep;
-			_k = rhs._k;
-			_it = rhs._it;
-			_it2 = rhs._it2;
-			_initial_great_values = rhs._initial_great_values;
-			_initial_pairs = rhs._initial_pairs;
-		}
-	};
+	Sort &operator=(const Sort &rhs);
 	void checkError(int argc, char *argv[]) const;
 	std::list<int> initialData();
 	//
@@ -42,7 +31,7 @@ public:
 	std::list<int> makeSmallList(std::list<int> great_values, std::list<std::pair<int, int > > pairs, int third_value);
 	std::list<int> insertGreat(std::list<int> great_values);
 	std::list<int> insertSmall(std::list<int> great_values, std::list<int> small_values);
-	std::list<int> dichoInsert(std::list<int> great_values, int target_value, ssize_t k, ssize_t last_k);
+	std::list<int> dichoInsert(std::list<int> great_values, int target_value, ssize_t k);
 
 private:
 
@@ -69,18 +58,7 @@ public:
 	~VSort();
 	VSort(const VSort &src);
 	VSort(int argc, char *argv[]);
-	VSort &operator=(const VSort &rhs) {
-		if (this != &rhs) {
-			_ac = rhs._ac;
-			_av = rhs._av;
-			_rstep = rhs._rstep;
-			_k = rhs._k;
-			_it = rhs._it;
-			_it2 = rhs._it2;
-			_initial_great_values = rhs._initial_great_values;
-			_initial_pairs = rhs._initial_pairs;
-		}
-	};
+	VSort &operator=(const VSort &rhs);
 	void checkError(int argc, char *argv[]) const;
 	std::vector<int> initialData();
 	//
@@ -90,7 +68,7 @@ public:
 	std::vector<int> makeSmallVector(std::vector<int> great_values, std::vector<std::pair<int, int > > pairs, int third_value);
 	std::vector<int> insertGreat(std::vector<int> great_values);
 	std::vector<int> insertSmall(std::vector<int> great_values, std::vector<int> small_values);
-	std::vector<int> dichoInsert(std::vector<int> great_values, int target_value, ssize_t k, ssize_t last_k);
+	std::vector<int> dichoInsert(std::vector<int> great_values, int target_value, ssize_t k);
 
 private:
 
