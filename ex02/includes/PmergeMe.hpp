@@ -12,7 +12,7 @@
 #include <ctime> // std::clock
 #include <string>
 
-#define BACKLINE std::cout << '\n' << '\n'
+#define BACKLINE std::cout << '\n'
 
 class Sort {
 
