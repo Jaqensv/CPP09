@@ -6,7 +6,7 @@
 /*   By: mde-lang <mde-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 18:16:52 by mde-lang          #+#    #+#             */
-/*   Updated: 2025/01/14 23:53:45 by mde-lang         ###   ########.fr       */
+/*   Updated: 2025/01/15 00:13:54 by mde-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,26 +51,6 @@ void parser(char *argv[])
 	}
 }
 
-// void checkError(char *argv[])
-// {
-// 	int digit = 0;
-// 	int op = 0;
-// 	for (size_t i = 0; i < strlen(argv[1]); ++i)
-// 	{
-// 		if (argv[1][i] != ' ')
-// 		{
-// 			if ((argv[1][i] < '0' || argv[1][i] > '9') && (argv[1][i] != '+' && argv[1][i] != '-' && argv[1][i] != '/' && argv[1][i] != '*'))
-// 				throw std::runtime_error("Error: bad argument");
-// 			if (argv[1][i] >= '0' && argv[1][i] <= '9')
-// 				digit++;
-// 			else if (argv[1][i] == '+' || argv[1][i] == '-' || argv[1][i] == '/' || argv[1][i] == '*')
-// 				op++;
-// 		}
-// 	}
-// 	if (digit - op != 1)
-// 		throw std::runtime_error("Error: bad argument");
-// }
-
 void checkError(char *argv[])
 {
     int digit = 0; // operandes
@@ -95,8 +75,7 @@ void checkError(char *argv[])
         else
             throw std::runtime_error("Error: bad argument");
     }
-    if (digit - op != 1)
-    {
+	if (digit - op != 1) {
         throw std::runtime_error("Error: bad argument");
     }
 }
