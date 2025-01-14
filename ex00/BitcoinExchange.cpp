@@ -6,7 +6,7 @@
 /*   By: mde-lang <mde-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:41:05 by mde-lang          #+#    #+#             */
-/*   Updated: 2024/10/15 18:04:55 by mde-lang         ###   ########.fr       */
+/*   Updated: 2025/01/14 22:16:56 by mde-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void Bitcoin::init(const std::string data, const std::string input)
 	openAndVerifyFile(data, input);
 
 	std::getline(_input, line);
-	if (line != "date | value")
+	if (line != "date | value" && line != "date,exchange_rate")
 		throw std::runtime_error("Error: header needs to be 'date | value'");
 	while (std::getline(_data, line))
 		dataMapping(line);
@@ -102,9 +102,7 @@ void Bitcoin::inputSplit(const std::string line)
 
 	_inputDate[i] = line.substr(0, 10);
     if (pos != std::string::npos)
-	{
         _inputValue[i] = line.substr(pos + 3);
-	}
 	else
 		_inputError[i] = "Error: wrong format. Must be 'XXXX-XX-XX | value'";
 	i++;

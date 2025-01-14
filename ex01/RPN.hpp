@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <stack>
 #include <cstring> // strlen
+#include <cctype>
 
 void parser(char *argv[]);
 void checkError(char *argv[]);
